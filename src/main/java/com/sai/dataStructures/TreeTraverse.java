@@ -1,5 +1,6 @@
 package com.sai.dataStructures;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class TreeTraverse {
@@ -33,11 +34,15 @@ public class TreeTraverse {
         System.out.println("        5     16 ");
         System.out.println("      /  \\   /  \\ ");
         System.out.println("     3   7  12   18 ");
+        System.out.println("     \\ ");
+        System.out.println("      4 ");
 
-        Node n3  = new Node(3, null, null); // Leaf node
+        Node n4  = new Node(4, null, null);
         Node n7 = new Node(7, null, null); // Leaf node
         Node n12 = new Node(12, null, null); // Leaf node
         Node n18 = new Node(18, null, null); // Leaf node
+
+        Node n3  = new Node(3, null, n4);
         Node n5 = new Node(5, n3, n7);
         Node n16 = new Node(16, n12, n18);
 
@@ -63,6 +68,8 @@ public class TreeTraverse {
 
         System.out.print("\n Post-order traverse (non-recursive): ");
         postorderNonRecursive(root);
+
+        postorderSai(root);
     }
 
     void preorderRecursive(Node node) {
@@ -152,5 +159,60 @@ public class TreeTraverse {
         }
     }
 
+
+    void postorderSai(Node node) {
+        if (node == null)
+            return;
+
+        Stack<Node> stk = new Stack<Node>();
+        /*
+        Node pre = null;
+        while (node!=null || !stk.empty()) {
+            if (node!=null) {
+                stk.push(node);
+                node = node.left;
+            }
+            else {
+                node = stk.peek();
+                if (node.right == null || node.right==pre) {
+                    System.out.print(node.data + " ");
+                    stk.pop();
+                    pre = node;
+                    node = null;
+                }
+                else {
+                    node = node.right;
+                }
+            }
+        } // while
+        // */
+
+
+        while(true) {
+            // while root is not null, push root's right child and root to stack
+            // set the root as root's left child
+            if (node!= null) {
+                if (node.right != null)
+                    stk.push(node.right);
+                stk.push(node);
+                node = node.left;
+            }
+            else {
+                if (stk.empty()) break;
+
+                node = stk.pop();
+                // if pop() item have right child and right child on top of stack, then
+                // remove the right child from stack, push the root to stack, then
+                // set the root as root's right child
+                // else print root's data and set root as NULL
+                if (node.right != null && node.right.data == stk.peek().data) {
+
+                }
+            }
+        }
+
+
+
+    }
 
 }
